@@ -32,7 +32,7 @@ a_vel = 1
 alpha = []
 #undiscovered = 0, visited =1, discovered =2
 status = [-1]*node_length
-final_path = []
+final_path = {}
 final_paths = []
 cost_path =[]
 fan_in = []
@@ -45,7 +45,7 @@ for i in range(0,node_length):
             indegree+=1
     fan_in.append(indegree)
 #print("Indegree")
-print(fan_in)
+#print(fan_in)
 
 #calculating outdegree in out
 for i in range(0,node_length):
@@ -54,7 +54,7 @@ for i in range(0,node_length):
         if inputMatrix[i][j]==1:
             outdegree=outdegree+1
     fan_out.append(outdegree)
-print(fan_out)
+#print(fan_out)
 
 #calculating cyclomatic complexity
 cyclomatic_complexity  =[]
@@ -63,7 +63,7 @@ for i in range(0,node_length):
     for j in range(i,node_length):
         cc_value += fan_out[j]
     cyclomatic_complexity.append(cc_value)
-print(cyclomatic_complexity)
+#print(cyclomatic_complexity)
 
 #creating list of nodes in neighbourhood for every vertex
 neighbourhood = []
@@ -73,7 +73,7 @@ for i in range(0, node_length):
         if inputMatrix[i][j]==1:
             adjacent_nodes.append(j)
     neighbourhood.append(adjacent_nodes)
-print(neighbourhood)
+#print(neighbourhood)
 
 #calculating subgraph
 def DFSNodeCalculator(i,visited,count):
@@ -93,18 +93,18 @@ for i in range(0,node_length):
     subgraph.append(DFSNodeCalculator(i,visited,count))
     del visited[:]
     count=0
-print ("Subgraph")
-print (subgraph)
+#print ("Subgraph")
+#print (subgraph)
 
 
 def check_status(neighbourhood_list,status):
     unvisited = []
-    unvisited2 =[]
+    #unvisited2 =[]
     for ele in neighbourhood_list:
         if status[ele] == -1:
             unvisited.append(ele)
-    print("..........status checked..............")
-    print(unvisited,"\n")
+    #print("..........status checked..............")
+    #print(unvisited,"\n")
     if(len(unvisited)==0):
         for ele in neighbourhood_list:
             if status[ele] == 1:
@@ -116,9 +116,9 @@ def check_status(neighbourhood_list,status):
 def checkAllVisited(node,status):
     for i in neighbourhood[node]:
         if status[i]==-1:
-            print("...checking all visted.....false\n",)
+            #print("...checking all visted.....false\n",)
             return False
-    print("...checking all visted.....true\n",)
+    #print("...checking all visted.....true\n",)
     return True
 
 
@@ -154,7 +154,7 @@ def writeCost(a,c):
     key  = str(a[0])
     for i in range(1,len(a)):
         key  = key+"-"+str(a[i])
-    print("........written cost updated..........")
+    #print("........written cost updated..........")
     cost_dict[key] = c
 
 
@@ -171,7 +171,7 @@ for i in range(0,node_length):
     if(fan_out[i]==0):
         leaves +=1
         
-print(leaves)
+#print(leaves)
 
 i=0
 path = []
@@ -181,13 +181,14 @@ status[i] = 1
 alpha.append(i)
 counter = 0
 visited =[]
-
+k=0
+veliwd_dict = {}
 while(sum(status)<= 2*node_length - leaves):
     #path.append(i)
     
     path =alpha
-    print(".....path.......\n",path)
-    print("....counter.....\n",counter)
+    #print(".....path.......\n",path)
+    #print("....counter.....\n",counter)
     while(fan_out[i]!=0):
         if counter == 0:
             if(fan_out[i]>1):
@@ -221,8 +222,13 @@ while(sum(status)<= 2*node_length - leaves):
         status[next_node]= 1
         if next_node not in alpha:
             alpha.append(next_node)
-        velocity[i][next_node] = vel_iwd + (a_vel/(soil[i]+soil_at_edge[i][next_node]))
+        if counter>1 and fan_out[next_node]>1:
+            velocity[i][next_node] = veliwd_dict[next_node] + (a_vel/(soil[i]+soil_at_edge[i][next_node]))
+            
+        else:
+            velocity[i][next_node] = vel_iwd + (a_vel/(soil[i]+soil_at_edge[i][next_node]))
         vel_iwd = velocity[i][next_node]
+        veliwd_dict[next_node] = vel_iwd
         dist_iwd = len(alpha)-1
         timetaken = dist_iwd/ vel_iwd
         soil_iwd = soil[i]/( timetaken + vel_iwd)
@@ -236,18 +242,25 @@ while(sum(status)<= 2*node_length - leaves):
         if(subgraph[next_node]!=0):
             i = next_node
         else:
-            print("..........leaf is found.........")
+            #print("..........leaf is found.........")
+            #print(".....alpha......",alpha)
+            path = alpha.copy()
+            
+            #print("...........alpha in final path...........")
+            final_path[k] = path
+            #print(final_path)
+            k=k+1
             break
-        print("...prev node..........",prev_node,"\ncounter....",counter)
-        print("...next node..........",next_node,"\ncounter....",counter)
+        #print("...prev node..........",prev_node,"\ncounter....",counter)
+        #print("...next node..........",next_node,"\ncounter....",counter)
         
         if(checkAllVisited(prev_node,status)):
             status[prev_node] = 2
         else:
             status[prev_node] = 0
-        
-    final_path.append(alpha)
-    print("..........finalpath......\n",final_path)
+    #if alpha not in final_path:    
+    #    final_path.append(alpha)
+    #print("..........finalpath......\n",final_path)
     #final_paths.append(path)
     cost_path.append(cost)
     writeCost(alpha,cost)
@@ -255,11 +268,11 @@ while(sum(status)<= 2*node_length - leaves):
     #alpha.pop()
     value ={}
     value = backtrack(alpha,False)
-    print("...info from backtrack..........",value["bool"])
+    #print("...info from backtrack..........",value["bool"])
     alpha = value["a"]
-    print(".....alpha from backtrack.........\n",alpha)
+    #print(".....alpha from backtrack.........\n",alpha)
     i  = value["ele"]
-    print(" .....decision node......\n",i)
+    #print(" .....decision node......\n",i)
     over = value["bool"]
     if(over == False):
         break
@@ -268,19 +281,24 @@ while(sum(status)<= 2*node_length - leaves):
     #counter += 1
     #print(counter)
 
-
+print("..$$finalPath$$...\n",final_path,"\n")
+print("....cost_path.......\n",cost_path,"\n")
 finalCostDict ={}       
 def printCostPath(final_path,cost_path):
     for i in range(0,len(final_path)):
         key = ""
         for j in final_path[i]:
             key += str(j)+"-"
-        print("...printing value...........of dict\n")
-        print(key + ":",cost_path[i])
+        #print("...printing value...........of dict\n")
+        #print(key + ":",cost_path[i])
+        key+=">"
         finalCostDict[key] = cost_path[i]
         
 printCostPath(final_path,cost_path)
+print("\n")
 print("......final cost dict......\n")
+print("..........path      ->        cost..........")
+
 print(finalCostDict)
 
 
