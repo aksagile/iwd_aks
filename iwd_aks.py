@@ -1,21 +1,40 @@
 #from BankParseUpdated import inputMatrix
 #from libraryParse import list_size
-inputMatrix = [[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
-               [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
-               [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
-               [0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+# =============================================================================
+# inputMatrix = [[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+#                [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+#                [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+#                [0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+#                [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+#                [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],
+#                [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
+#                [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+#                [0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+# =============================================================================
+#parent=[]
+inputMatrix = [[0,1,0,0,0,0,1,0,0,0,0,0,0,0,0],
+               [0,0,1,0,0,0,1,0,0,0,0,0,0,0,0],
+               [0,0,0,1,0,0,1,0,0,0,0,0,0,0,0],
+               [0,0,0,0,1,0,1,0,0,0,0,0,0,0,0],
+               [0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
+               [0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-               [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
-               [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],
-               [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
-               [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
-               [0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
+               [0,0,0,0,0,0,0,0,1,0,0,1,0,0,0],
+               [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0],
                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-               [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
-               [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0],
+               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
-#parent=[]
+
+
 node_length=len(inputMatrix)
 #or i in range(0,node_length):
 #    allParents = []
@@ -66,6 +85,8 @@ for i in range(0,node_length):
 #print(cyclomatic_complexity)
 
 #creating list of nodes in neighbourhood for every vertex
+    
+
 neighbourhood = []
 for i in range(0, node_length):
     adjacent_nodes =[]
@@ -74,6 +95,8 @@ for i in range(0, node_length):
             adjacent_nodes.append(j)
     neighbourhood.append(adjacent_nodes)
 #print(neighbourhood)
+
+#creating a parent node for backtracking
 
 #calculating subgraph
 def DFSNodeCalculator(i,visited,count):
@@ -101,13 +124,13 @@ def check_status(neighbourhood_list,status):
     unvisited = []
     #unvisited2 =[]
     for ele in neighbourhood_list:
-        if status[ele] == -1:
+        if status[ele] == -1 or status[ele]==1:
             unvisited.append(ele)
     #print("..........status checked..............")
     #print(unvisited,"\n")
     if(len(unvisited)==0):
         for ele in neighbourhood_list:
-            if status[ele] == 1:
+            if status[ele] == 2:
                 unvisited.append(ele)
     return unvisited
 
@@ -125,17 +148,21 @@ def checkAllVisited(node,status):
 
 def backtrack(a,o):
     if len(a)==1 or len(a)==0:
-        ele = -1
         return {"a":a,"ele":-1,"bool":o} 
-    elif status[a[len(a)-1]] == 0:
+    if status[a[len(a)-1]] == 1 :
        ele = a[len(a)-1]
        o = True
        return {"a":a,"ele":ele,"bool":o}
-    else:
-        #status[]
-        status[a[-1]] = 1
-        a.pop()
-        return backtrack(a,o)
+    #elif status[a[len(a)-1]]==2:
+    a.pop()
+    return backtrack(a,o)
+# =============================================================================
+#     else:
+#         #status[]
+#         status[a[-1]] = 1
+#         a.pop()
+#         return backtrack(a,o)
+# =============================================================================
             
                 
     
@@ -222,7 +249,7 @@ while(sum(status)<= 2*node_length - leaves):
         status[next_node]= 1
         if next_node not in alpha:
             alpha.append(next_node)
-        if counter>1 and fan_out[next_node]>1:
+        if counter>1 and fan_out[next_node]>1 and next_node in veliwd_dict:
             velocity[i][next_node] = veliwd_dict[next_node] + (a_vel/(soil[i]+soil_at_edge[i][next_node]))
             
         else:
@@ -256,8 +283,8 @@ while(sum(status)<= 2*node_length - leaves):
         
         if(checkAllVisited(prev_node,status)):
             status[prev_node] = 2
-        else:
-            status[prev_node] = 0
+        #else:
+        #    status[prev_node] = 0
     #if alpha not in final_path:    
     #    final_path.append(alpha)
     #print("..........finalpath......\n",final_path)
@@ -274,8 +301,11 @@ while(sum(status)<= 2*node_length - leaves):
     i  = value["ele"]
     #print(" .....decision node......\n",i)
     over = value["bool"]
-    if(over == False):
-        break
+# =============================================================================
+#     if(over == False):
+#         print("counter: ",counter)
+#         break
+# =============================================================================
     #cost = findBacktrackedCost(cost_dict,alpha)
     cost = costNode[i]
     #counter += 1
@@ -300,7 +330,7 @@ print("......final cost dict......\n")
 print("..........path      ->        cost..........")
 
 print(finalCostDict)
-
+print(status)
 
 
 
