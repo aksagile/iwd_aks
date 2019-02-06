@@ -1,38 +1,38 @@
 #from BankParseUpdated import inputMatrix
 #from libraryParse import list_size
-# =============================================================================
-# inputMatrix = [[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
-#                [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
-#                [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
-#                [0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-#                [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
-#                [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],
-#                [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
-#                [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
-#                [0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
-#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-#                [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
-#                [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
-# =============================================================================
-#parent=[]
-inputMatrix = [[0,1,0,0,0,0,1,0,0,0,0,0,0,0,0],
-               [0,0,1,0,0,0,1,0,0,0,0,0,0,0,0],
-               [0,0,0,1,0,0,1,0,0,0,0,0,0,0,0],
-               [0,0,0,0,1,0,1,0,0,0,0,0,0,0,0],
-               [0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
-               [0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
+import operator
+inputMatrix = [[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+               [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+               [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+               [0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-               [0,0,0,0,0,0,0,0,1,0,0,1,0,0,0],
-               [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0],
+               [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+               [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],
+               [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
+               [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+               [0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-               [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0],
-               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+               [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+
+parent=[]
+# inputMatrix = [[0,1,0,0,0,0,1,0,0,0,0,0,0,0,0],
+#                [0,0,1,0,0,0,1,0,0,0,0,0,0,0,0],
+#                [0,0,0,1,0,0,1,0,0,0,0,0,0,0,0],
+#                [0,0,0,0,1,0,1,0,0,0,0,0,0,0,0],
+#                [0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
+#                [0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+#                [0,0,0,0,0,0,0,0,1,0,0,1,0,0,0],
+#                [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+#                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
 
 
 node_length=len(inputMatrix)
@@ -49,7 +49,7 @@ soil_iwd =0.0
 vel_iwd  =100
 a_vel = 1
 alpha = []
-#undiscovered = 0, visited =1, discovered =2
+#undiscovered = -1, visited =1, discovered =2
 status = [-1]*node_length
 final_path = {}
 final_paths = []
@@ -124,14 +124,18 @@ def check_status(neighbourhood_list,status):
     unvisited = []
     #unvisited2 =[]
     for ele in neighbourhood_list:
-        if status[ele] == -1 or status[ele]==1:
+        if status[ele] == -1:
             unvisited.append(ele)
     #print("..........status checked..............")
     #print(unvisited,"\n")
     if(len(unvisited)==0):
         for ele in neighbourhood_list:
-            if status[ele] == 2:
+            if status[ele]==1:
                 unvisited.append(ele)
+        if(len(unvisited)==0):
+            for ele in neighbourhood_list:
+                if(status[ele]==2):
+                    unvisited.append(ele)
     return unvisited
 
 
@@ -148,14 +152,16 @@ def checkAllVisited(node,status):
 
 def backtrack(a,o):
     if len(a)==1 or len(a)==0:
-        return {"a":a,"ele":-1,"bool":o} 
-    if status[a[len(a)-1]] == 1 :
-       ele = a[len(a)-1]
-       o = True
-       return {"a":a,"ele":ele,"bool":o}
+        return {"a":a,"ele":0,"bool":o} 
+    elif status[a[len(a)-1]] == 1 and a[len(a)-1] not in leaf:
+        ele = a[len(a)-1]
+        o = True
+        return {"a":a,"ele":ele,"bool":o}
     #elif status[a[len(a)-1]]==2:
-    a.pop()
-    return backtrack(a,o)
+    else:
+        a.pop()
+        print("inside the recursion")
+        return backtrack(a,o)
 # =============================================================================
 #     else:
 #         #status[]
@@ -175,12 +181,25 @@ cost_dict={}
 #        key = key + "-" + str(alpha[i])
 #    return cost_dict[key]
 
+def redundant_path(path,redundant_nodes):
+    new_path = []
+    for i in range(0,len(path)):
+        if path[i] not in redundant_nodes:
+            new_path.append(path[i])
+    return new_path
 
+def checkFinalPath(path,final_path):
+    for i,j in final_path.items():
+        print(i," -> ",j)
+        if path == j:
+            return False
+    return True
 
-def writeCost(a,c):
-    key  = str(a[0])
-    for i in range(1,len(a)):
-        key  = key+"-"+str(a[i])
+def writeCost(a,c,r):
+    key  = ""
+    for i in range(0,len(a)):
+        if(a[i] not in r):
+            key  = key+"-"+str(a[i])
     #print("........written cost updated..........")
     cost_dict[key] = c
 
@@ -194,8 +213,10 @@ decisionFactor = [[0.0 for x in range(0,node_length)] for y in range(0,node_leng
 velocity = [[0.0 for x in range(0,node_length)] for y in range(0,node_length)]
 timeTaken = [[0.0 for x in range(0,node_length)] for y in range(0,node_length)]
 leaves = 0
+leaf =[]
 for i in range(0,node_length):
     if(fan_out[i]==0):
+        leaf.append(i)
         leaves +=1
         
 #print(leaves)
@@ -210,6 +231,8 @@ counter = 0
 visited =[]
 k=0
 veliwd_dict = {}
+all_over = False
+redundant_nodes = []
 while(sum(status)<= 2*node_length - leaves):
     #path.append(i)
     
@@ -217,6 +240,10 @@ while(sum(status)<= 2*node_length - leaves):
     #print(".....path.......\n",path)
     #print("....counter.....\n",counter)
     while(fan_out[i]!=0):
+        if(counter>1 and i==0):
+            status[i] = 2
+            all_over = True
+            break
         if counter == 0:
             if(fan_out[i]>1):
                soil[i] = soil_iwd + cyclomatic_complexity[i] + 1
@@ -266,46 +293,60 @@ while(sum(status)<= 2*node_length - leaves):
         costNode[next_node]  = cost
         #writeCost(alpha,cost)
         prev_node = i
+        
         if(subgraph[next_node]!=0):
             i = next_node
+            if(checkAllVisited(prev_node,status)):
+                status[prev_node] = 2
+            
         else:
             #print("..........leaf is found.........")
             #print(".....alpha......",alpha)
             path = alpha.copy()
-            
-            #print("...........alpha in final path...........")
-            final_path[k] = path
-            #print(final_path)
-            k=k+1
+            print("...red nodes..",redundant_nodes)
+            if checkFinalPath(path,final_path):
+                path2 = redundant_path(path,redundant_nodes)
+                final_path[k] = path2
+                k=k+1
+                break
             break
         #print("...prev node..........",prev_node,"\ncounter....",counter)
         #print("...next node..........",next_node,"\ncounter....",counter)
         
-        if(checkAllVisited(prev_node,status)):
-            status[prev_node] = 2
+        
         #else:
         #    status[prev_node] = 0
     #if alpha not in final_path:    
     #    final_path.append(alpha)
     #print("..........finalpath......\n",final_path)
     #final_paths.append(path)
+    if all_over:
+        break
+    if(checkAllVisited(prev_node,status)):
+        status[prev_node] = 2
     cost_path.append(cost)
-    writeCost(alpha,cost)
+    writeCost(alpha,cost,redundant_nodes)
     counter = counter+1
+    print("\n status of each node -> ",status)
+    print("\n cost an alpha -> ",alpha,cost)
     #alpha.pop()
     value ={}
     value = backtrack(alpha,False)
     #print("...info from backtrack..........",value["bool"])
     alpha = value["a"]
-    #print(".....alpha from backtrack.........\n",alpha)
+    print("\n .....alpha from backtrack.........",alpha)
     i  = value["ele"]
-    #print(" .....decision node......\n",i)
+    redundant_nodes = alpha.copy()
+    #alpha.clear()
+    #alpha.append(i)
+
+    print("\n .....decision node......",i)
     over = value["bool"]
-# =============================================================================
-#     if(over == False):
-#         print("counter: ",counter)
-#         break
-# =============================================================================
+
+    #if(over == False):
+    #    print("counter: ",counter)
+    #    break
+
     #cost = findBacktrackedCost(cost_dict,alpha)
     cost = costNode[i]
     #counter += 1
@@ -313,7 +354,8 @@ while(sum(status)<= 2*node_length - leaves):
 
 print("..$$finalPath$$...\n",final_path,"\n")
 print("....cost_path.......\n",cost_path,"\n")
-finalCostDict ={}       
+finalCostDict ={}
+path_set = set
 def printCostPath(final_path,cost_path):
     for i in range(0,len(final_path)):
         key = ""
@@ -322,13 +364,13 @@ def printCostPath(final_path,cost_path):
         #print("...printing value...........of dict\n")
         #print(key + ":",cost_path[i])
         key+=">"
-        finalCostDict[key] = cost_path[i]
+        finalCostDict[cost_path[i]] = key 
         
 printCostPath(final_path,cost_path)
 print("\n")
 print("......final cost dict......\n")
-print("..........path      ->        cost..........")
-
+print("..........cost     ->        path..........")
+finalCostDict = sorted(finalCostDict.items(), key = operator.itemgetter(0), reverse = True)
 print(finalCostDict)
 print(status)
 
